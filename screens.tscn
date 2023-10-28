@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=3 uid="uid://u1iv0d1s1vgg"]
+
+[ext_resource type="PackedScene" uid="uid://dbcrt8iur1ae4" path="res://main.tscn" id="1_wvmgd"]
+[ext_resource type="Script" path="res://src/camera/CustomCamera2D.gd" id="2_xh58l"]
+
+[sub_resource type="Shader" id="Shader_82407"]
+code = "shader_type canvas_item;
+
+uniform float dither : hint_range(0.0, 1.0) = 0.5;
+uniform float bits : hint_range(1.0, 8.0, 1.0) = 6.0;
+uniform bool limit_palette = true;
+
+uniform vec2 cam_offset = vec2(0,0);
+
+void vertex() {
+	VERTEX += cam_offset;
+}
+
+void fragment() {
+    vec4 screen_color = texture(TEXTURE, UV);
+    
+    float a = floor(mod(UV.x / TEXTURE_PIXEL_SIZE.x, 2.0));
+    float b = floor(mod(UV.y / TEXTURE_PIXEL_SIZE.y, 2.0)); 
+    float c = mod(a + b, 2.0);
+	
+	if (limit_palette) {
+	    vec4 reduced = vec4(vec3(0.0), 1.0);
+	    
+		float nb_colors = pow(2.0, bits);
+		
+	    reduced.r = (round(screen_color.r * nb_colors + dither) / nb_colors) * c;
+	    reduced.g = (round(screen_color.g * nb_colors + dither) / nb_colors) * c;
+	    reduced.b = (round(screen_color.b * nb_colors + dither) / nb_colors) * c;
+	    c = 1.0 - c;
+	    reduced.r += (round(screen_color.r * nb_colors - dither) / nb_colors) * c;
+	    reduced.g += (round(screen_color.g * nb_colors - dither) / nb_colors) * c;
+	    reduced.b += (round(screen_color.b * nb_colors - dither) / nb_colors) * c;
+		
+		COLOR = reduced;
+	} else {
+		COLOR = screen_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cy1x1"]
+shader = SubResource("Shader_82407")
+shader_parameter/dither = 0.5
+shader_parameter/bits = 6.0
+shader_parameter/limit_palette = false
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1byre"]
+noise_type = 3
+frequency = 0.15
+
+[node name="Screens" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_cy1x1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -1604.0
+offset_bottom = -904.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(6, 6)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+use_taa = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(322, 182)
+render_target_update_mode = 4
+
+[node name="Main" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("camera") instance=ExtResource("1_wvmgd")]
+camera = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("container", "game")]
+script = ExtResource("2_xh58l")
+container = NodePath("../..")
+game = NodePath("../Main")
+noise = SubResource("FastNoiseLite_1byre")

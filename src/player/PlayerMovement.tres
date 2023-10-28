@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Movement" load_steps=4 format=3 uid="uid://degauub6lr2hv"]
+
+[ext_resource type="Script" path="res://src/movement/Movement.gd" id="1_u05go"]
+
+[sub_resource type="Curve" id="Curve_s7eni"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_jyokq"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[resource]
+script = ExtResource("1_u05go")
+max_speed = 450
+friction_factor = 50
+acceleration = SubResource("Curve_s7eni")
+friction = SubResource("Curve_jyokq")
