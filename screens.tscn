@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://u1iv0d1s1vgg"]
+[gd_scene load_steps=8 format=3 uid="uid://u1iv0d1s1vgg"]
 
 [ext_resource type="PackedScene" uid="uid://dbcrt8iur1ae4" path="res://main.tscn" id="1_wvmgd"]
 [ext_resource type="Script" path="res://src/camera/CustomCamera2D.gd" id="2_xh58l"]
@@ -53,6 +53,32 @@ shader_parameter/cam_offset = Vector2(0, 0)
 noise_type = 3
 frequency = 0.15
 
+[sub_resource type="Shader" id="Shader_f54mf"]
+code = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE :hint_screen_texture, filter_linear_mipmap;
+uniform float quality :hint_range(1, 16, 1) = 8;
+uniform vec2 size = vec2(0.0);
+
+void fragment() {
+	vec2 direction = size * SCREEN_PIXEL_SIZE * 8.0;
+	vec4 output = texture(SCREEN_TEXTURE, SCREEN_UV);
+	
+	for (float i = 1.0 / quality; i <= 1.0; i += 1.0 / quality) {
+		output += texture(SCREEN_TEXTURE, SCREEN_UV + direction * i);
+	}
+
+	output /= quality + 1.0;
+	
+	COLOR = output;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0c5rj"]
+shader = SubResource("Shader_f54mf")
+shader_parameter/quality = 8.0
+shader_parameter/size = Vector2(0, 0)
+
 [node name="Screens" type="Control"]
 process_mode = 3
 layout_mode = 3
@@ -80,7 +106,6 @@ scale = Vector2(6, 6)
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
-snap_2d_transforms_to_pixel = true
 use_taa = true
 canvas_item_default_texture_filter = 0
 size = Vector2i(322, 182)
@@ -88,9 +113,23 @@ render_target_update_mode = 4
 
 [node name="Main" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("camera") instance=ExtResource("1_wvmgd")]
 camera = NodePath("../Camera2D")
+shoot_stress = 0.05
+hit_stress = 0.1
+freeze_frame = 0.02
 
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("container", "game")]
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("container", "game", "blur")]
 script = ExtResource("2_xh58l")
 container = NodePath("../..")
 game = NodePath("../Main")
+max_offset = 20.0
 noise = SubResource("FastNoiseLite_1byre")
+blur = NodePath("../../../Blur")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0c5rj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

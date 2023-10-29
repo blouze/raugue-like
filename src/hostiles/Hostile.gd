@@ -10,8 +10,8 @@ class_name Hostile extends CharacterBody2D
 @onready var anim_tree = $AnimationTree as AnimationTree
 @onready var playback = anim_tree["parameters/playback"] as AnimationNodeStateMachinePlayback
 
-signal been_hit(hostile :Hostile)
-signal died(hostile :Hostile)
+signal been_hit(projectile :Projectile)
+signal died()
 
 
 var blend_pos := Vector2.ZERO :
@@ -25,8 +25,7 @@ var blend_pos := Vector2.ZERO :
 
 
 func update_nav():
-	pass
-#	nav_agent.target_position = player.global_position
+	nav_agent.target_position = player.global_position
 
 
 func hit(projectile :Projectile):
@@ -34,11 +33,11 @@ func hit(projectile :Projectile):
 	
 	velocity = (position - projectile.position).normalized() * projectile.recoil
 	
-	been_hit.emit(self)
+	been_hit.emit(projectile)
 	playback.travel("Die")
 	
 	if stats.health <= 0:
-		died.emit(self)
+		died.emit()
 		$CollisionShape2D.set_deferred("disabled", true)
 		
 		await get_tree().create_timer(3.0).timeout
@@ -66,6 +65,6 @@ func _physics_process(delta):
 
 
 func _on_hurtbox_entered(body):
-	print(body)
+#	print(body)
 	if body is Player:
 		body.hurt.emit(self)
