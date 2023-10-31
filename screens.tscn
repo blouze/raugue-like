@@ -1,5 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://u1iv0d1s1vgg"]
+[gd_scene load_steps=10 format=3 uid="uid://u1iv0d1s1vgg"]
 
+[ext_resource type="Script" path="res://screens.gd" id="1_5nfhd"]
+[ext_resource type="Theme" uid="uid://pv22nvpitdjd" path="res://theme.tres" id="1_eey4u"]
 [ext_resource type="PackedScene" uid="uid://dbcrt8iur1ae4" path="res://main.tscn" id="1_wvmgd"]
 [ext_resource type="Script" path="res://src/camera/CustomCamera2D.gd" id="2_xh58l"]
 
@@ -10,6 +12,7 @@ uniform float dither : hint_range(0.0, 1.0) = 0.5;
 uniform float bits : hint_range(1.0, 8.0, 1.0) = 6.0;
 uniform bool limit_palette = true;
 
+uniform float tilt : hint_range(-1.0, 1.0) = 0.0;
 uniform vec2 cam_offset = vec2(0,0);
 
 void vertex() {
@@ -17,10 +20,17 @@ void vertex() {
 }
 
 void fragment() {
-    vec4 screen_color = texture(TEXTURE, UV);
+	float angle = (tilt + 0.5) * PI;
+	mat2 rotation = mat2(vec2(sin(angle), -cos(angle)), vec2(cos(angle), sin(angle)));
+	vec2 uv = UV;
+	uv -= vec2(0.5);
+	uv *= rotation;
+	uv += vec2(0.5);
+	
+    vec4 screen_color = texture(TEXTURE, uv);
     
-    float a = floor(mod(UV.x / TEXTURE_PIXEL_SIZE.x, 2.0));
-    float b = floor(mod(UV.y / TEXTURE_PIXEL_SIZE.y, 2.0)); 
+    float a = floor(mod(uv.x / TEXTURE_PIXEL_SIZE.x, 2.0));
+    float b = floor(mod(uv.y / TEXTURE_PIXEL_SIZE.y, 2.0)); 
     float c = mod(a + b, 2.0);
 	
 	if (limit_palette) {
@@ -45,8 +55,9 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cy1x1"]
 shader = SubResource("Shader_82407")
 shader_parameter/dither = 0.5
-shader_parameter/bits = 6.0
+shader_parameter/bits = 4.0
 shader_parameter/limit_palette = false
+shader_parameter/tilt = 0.0
 shader_parameter/cam_offset = Vector2(0, 0)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1byre"]
@@ -87,21 +98,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_5nfhd")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_cy1x1")
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = -6.0
 offset_top = -6.0
-offset_right = -1604.0
-offset_bottom = -904.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 316.0
+offset_bottom = 176.0
 scale = Vector2(6, 6)
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 disable_3d = true
@@ -113,15 +121,15 @@ render_target_update_mode = 4
 
 [node name="Main" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("camera") instance=ExtResource("1_wvmgd")]
 camera = NodePath("../Camera2D")
-shoot_stress = 0.05
 hit_stress = 0.1
-freeze_frame = 0.02
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("container", "game", "blur")]
+process_mode = 1
 script = ExtResource("2_xh58l")
 container = NodePath("../..")
 game = NodePath("../Main")
-max_offset = 20.0
+max_angle = 0.5
+max_offset = 24.0
 noise = SubResource("FastNoiseLite_1byre")
 blur = NodePath("../../../Blur")
 
@@ -133,3 +141,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Menu" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(5, 0)
+theme = ExtResource("1_eey4u")
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Menu/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "PAUSED"
+horizontal_alignment = 1

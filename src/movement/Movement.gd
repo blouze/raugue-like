@@ -8,20 +8,18 @@ class_name Movement extends Resource
 
 const WALK_THRESHOLD := 4.0
 
-var speed_cur := 0.0
 
-
-func get_acceleration() -> float:
+func get_acceleration(speed :float) -> float:
 	var f := 0.0
 	
-	f += acceleration.sample_baked(speed_cur / max_speed) * acc
+	f += acceleration.sample_baked(speed / max_speed) * acc
 	
 	return f
 
 
-func get_friction() -> float:
+func get_friction(speed :float) -> float:
 	var f := 0.0
 	
-	f -= friction.sample_baked(speed_cur / max_speed) * k
+	f -= friction.sample_baked(speed / max_speed) * k
 	
 	return f

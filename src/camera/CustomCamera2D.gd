@@ -29,9 +29,10 @@ func _physics_process(delta):
 	actual_pos = lerp(actual_pos, cam_pos, pow(snap_player, 3) * delta * 60)
 	
 	var cam_offset := actual_pos.round() - actual_pos + offset
-	cam_offset.rotated(rotation)
 	container.material.set_shader_parameter("cam_offset", cam_offset)
+	container.material.set_shader_parameter("tilt", rotation)
 	
 	offset = Vector2.ZERO
+	rotation = 0
 	
 	global_position = actual_pos.round()

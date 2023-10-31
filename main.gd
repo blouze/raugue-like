@@ -2,15 +2,18 @@ class_name Game extends Node2D
 
 @export var camera :CustomCamera2D
 @export_range(0.0, 0.5) var shoot_stress = 0.1
-@export_range(0.0, 0.5) var hit_stress = 0.2
-@export_range(0.0, 0.2) var freeze_frame = 0.1
+@export_range(0.0, 0.5) var hit_stress = 0.15
+@export_range(0.0, 0.5) var hurt_stress = 0.35
+@export_range(0.0, 0.2) var freeze_frame = 0.02
+
+@export var sound_on := true :
+	set(value):
+		sound_on = value
+		SoundManager.disabled = not sound_on
 
 @onready var player = $%Player as Player
 #@onready var hostile = $%Hostile as Hostile
 @onready var tile_map = $%TileMap as TileMap
-
-var hostile_res = preload("res://src/hostiles/Hostile.tscn")
-var impact_res = preload("res://src/projectiles/Impact.tscn")
 
 
 func _on_player_shoot(projectile :Projectile):
@@ -20,22 +23,21 @@ func _on_player_shoot(projectile :Projectile):
 	add_child(projectile)
 
 
-func _on_player_hurt(assailant :Hostile):
+func _on_player_been_hurt(hostile :Hostile):
 	SoundManager.play("res://assets/snd/hitHurt.wav")
-	player.velocity += (assailant.position - player.position).normalized() * 16
+	camera.stress(0.5)
+	
+	freeze()
 
 
 func _on_hostile_been_hit(projectile :Projectile, hostile :Hostile):
 	SoundManager.play("res://assets/snd/hitHurt.wav")
 	camera.stress(hit_stress)
 	
-	var impact = impact_res.instantiate() as Node2D
-	impact.position = lerp(projectile.position, hostile.position, 0.5)
-	add_child(impact)
+	var pos = lerp(projectile.position, hostile.position, 0.5)
+	add_child(Impact.create(pos))
 	
-	get_tree().paused = true
-	await get_tree().create_timer(freeze_frame).timeout
-	get_tree().paused = false
+	freeze()
 
 
 func _on_hostile_died(hostile :Hostile):
@@ -45,9 +47,7 @@ func _on_hostile_died(hostile :Hostile):
 func _on_wall_been_hit(projectile :Projectile):
 	SoundManager.play("res://assets/snd/hitHurt.wav")
 	
-	var impact = impact_res.instantiate() as Node2D
-	impact.position = projectile.position
-	add_child(impact)
+	add_child(Impact.create(projectile.position))
 
 
 func _ready():
@@ -55,24 +55,11 @@ func _ready():
 	cells.shuffle()
 	
 	for i in range(10):
-		var hostile = hostile_res.instantiate() as Hostile
-		hostile.player = player
-		hostile.position = tile_map.map_to_local(cells[i])
-		hostile.been_hit.connect(_on_hostile_been_hit.bind(hostile))
-		hostile.died.connect(_on_hostile_died.bind(hostile))
-		tile_map.add_child(hostile)
+		var pos = tile_map.map_to_local(cells[i])
+		tile_map.add_child(Hostile.create(self, pos))
 
 
-func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
-	
-	elif event.is_action_pressed("full_screen"):
-		
-		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+func freeze():
+	get_tree().paused = true
+	await get_tree().create_timer(freeze_frame).timeout
+	get_tree().paused = false

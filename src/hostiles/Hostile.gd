@@ -1,6 +1,13 @@
 class_name Hostile extends CharacterBody2D
 
 
+static var hostile_res = preload("res://src/hostiles/Hostile.tscn")
+
+const animations = ["Idle", "Walk", "Hit", "Die"]
+
+signal been_hit(projectile :Projectile)
+signal died()
+
 @export var movement :Movement
 @export var stats :HostileStats
 @export var chasing := false
@@ -10,18 +17,13 @@ class_name Hostile extends CharacterBody2D
 @onready var anim_tree = $AnimationTree as AnimationTree
 @onready var playback = anim_tree["parameters/playback"] as AnimationNodeStateMachinePlayback
 
-signal been_hit(projectile :Projectile)
-signal died()
-
 
 var blend_pos := Vector2.ZERO :
 	set(value):
 		blend_pos = value
 		
-		anim_tree["parameters/Idle/blend_position"] = blend_pos
-		anim_tree["parameters/Walk/blend_position"] = blend_pos
-		anim_tree["parameters/Hit/blend_position"] = blend_pos
-		anim_tree["parameters/Die/blend_position"] = blend_pos
+		for animation in animations:
+			anim_tree["parameters/%s/blend_position" % animation] = blend_pos
 
 
 func update_nav():
@@ -47,19 +49,17 @@ func hit(projectile :Projectile):
 
 
 func _physics_process(delta):
-	movement.speed_cur = velocity.length()
-	
 	if ["Idle", "Walk"].has(playback.get_current_node()):
 		
 		if chasing:
 			var direction = to_local(nav_agent.get_next_path_position()).normalized()
-			velocity += movement.get_acceleration() * direction
+			velocity += movement.get_acceleration(velocity.length()) * direction
 			blend_pos = direction if direction.length() > 0 else velocity / movement.max_speed
 		
 		else:
 			velocity = Vector2.ZERO
 	
-	velocity += movement.get_friction() * velocity.normalized()
+	velocity += movement.get_friction(velocity.length()) * velocity.normalized()
 	
 	move_and_slide()
 
@@ -67,4 +67,15 @@ func _physics_process(delta):
 func _on_hurtbox_entered(body):
 #	print(body)
 	if body is Player:
-		body.hurt.emit(self)
+		body.hurt(self)
+
+
+static func create(game :Game, pos :Vector2) -> Hostile:
+	var hostile = hostile_res.instantiate() as Hostile
+	
+	hostile.player = game.player
+	hostile.position = pos
+	hostile.been_hit.connect(game._on_hostile_been_hit.bind(hostile))
+	hostile.died.connect(game._on_hostile_died.bind(hostile))
+	
+	return hostile

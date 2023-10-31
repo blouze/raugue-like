@@ -6,8 +6,11 @@ var bus = "master"
 var available = []  # The available players.
 var queue = []  # The queue of sounds to play.
 
+var disabled := false
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	# Create the pool of AudioStreamPlayer nodes.
 	for i in num_players:
 		var p := AudioStreamPlayer.new()
@@ -23,7 +26,8 @@ func _on_stream_finished(stream):
 
 
 func play(sound_path):
-	queue.append(sound_path)
+	if not disabled:
+		queue.append(sound_path)
 
 
 func _process(delta):

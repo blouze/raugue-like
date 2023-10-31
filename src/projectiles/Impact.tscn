@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckb5u7shk8060"]
+[gd_scene load_steps=5 format=3 uid="uid://ckb5u7shk8060"]
 
+[ext_resource type="Script" path="res://src/projectiles/Impact.gd" id="1_8jpsn"]
 [ext_resource type="Texture2D" uid="uid://damie21pt1iq5" path="res://assets/textures/fx/Fire Effect and Bullet 16x16.png" id="1_valh1"]
 
 [sub_resource type="Animation" id="Animation_32tmq"]
@@ -38,6 +39,7 @@ _data = {
 }
 
 [node name="Impact" type="Node2D"]
+script = ExtResource("1_8jpsn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_valh1")
