@@ -64,7 +64,7 @@ func _ready():
 	var cells = tile_map.get_used_cells_by_id(0, 0, Vector2i(11, 9))
 	cells.shuffle()
 	
-	for i in range(5):
+	for i in range(0):
 		var pos = tile_map.map_to_local(cells[i])
 		tile_map.add_child(Hostile.create(self, pos))
 

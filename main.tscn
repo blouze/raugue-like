@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://dbcrt8iur1ae4"]
+[gd_scene load_steps=66 format=3 uid="uid://dbcrt8iur1ae4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gsm44"]
 [ext_resource type="TileSet" uid="uid://dorxf77wsysvg" path="res://src/map/tile_set.tres" id="2_virxh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://wpau8pncduyq" path="res://assets/light.png" id="7_m4k15"]
 [ext_resource type="Texture2D" uid="uid://pw1l7xwo8g1h" path="res://assets/Shadow.png" id="9_a46j0"]
 [ext_resource type="PackedScene" uid="uid://xsykirwbut2d" path="res://src/map/WFCTemplates/wfc_template.tscn" id="10_qj23r"]
+[ext_resource type="PackedScene" uid="uid://bh78bp4rynku3" path="res://src/hostiles/Hostile.tscn" id="10_rqtbo"]
 
 [sub_resource type="Curve" id="Curve_bloih"]
 _data = [Vector2(0, 1), 0.0, -0.7, 0, 1, Vector2(1, 0.3), -0.7, 0.0, 1, 0]
@@ -669,6 +670,10 @@ parameters/Die/blend_position = Vector2(0, 0)
 parameters/Hit/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0.0425354, -0.633188)
+
+[node name="Hostile" parent="TileMap" node_paths=PackedStringArray("player") instance=ExtResource("10_rqtbo")]
+position = Vector2(774, 171)
+player = NodePath("../Player")
 
 [connection signal="been_hit" from="TileMap" to="." method="_on_wall_been_hit"]
 [connection signal="been_hurt" from="TileMap/Player" to="." method="_on_player_been_hurt"]

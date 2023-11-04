@@ -1,30 +1,40 @@
-[gd_scene load_steps=60 format=3 uid="uid://bh78bp4rynku3"]
+[gd_scene load_steps=69 format=3 uid="uid://bh78bp4rynku3"]
 
 [ext_resource type="Script" path="res://src/hostiles/Hostile.gd" id="1_kfo85"]
-[ext_resource type="Script" path="res://src/movement/Movement.gd" id="2_qmica"]
-[ext_resource type="Script" path="res://src/hostiles/HostileStats.gd" id="3_33i21"]
+[ext_resource type="Script" path="res://src/movement/Movement.gd" id="2_b35fe"]
+[ext_resource type="Script" path="res://src/hostiles/HostileStats.gd" id="3_c330g"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/HostileBeehaveTree.gd" id="4_1g4he"]
 [ext_resource type="Texture2D" uid="uid://pw1l7xwo8g1h" path="res://assets/Shadow.png" id="4_ewnqk"]
 [ext_resource type="Texture2D" uid="uid://ddxbusvcctfl2" path="res://assets/textures/characters/hostiles/Skeleton_sheet.png" id="5_uc62b"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="5_uxxe7"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="6_k0ayi"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="7_8y5nr"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/conditions/IsPlayerClose.gd" id="8_ij5sk"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/conditions/IsDead.gd" id="8_ldr6f"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/conditions/IsHit.gd" id="9_ahfqt"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/actions/DoNothing.gd" id="9_y040g"]
+[ext_resource type="Script" path="res://src/hostiles/beehave/actions/ReachPlayer.gd" id="10_1v4tm"]
 
-[sub_resource type="Curve" id="Curve_tnchi"]
+[sub_resource type="Curve" id="Curve_tmd02"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
+metadata/_snap_enabled = true
 
-[sub_resource type="Curve" id="Curve_yjvwc"]
+[sub_resource type="Curve" id="Curve_t0ufk"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
 point_count = 2
+metadata/_snap_enabled = true
 
-[sub_resource type="Resource" id="Resource_hcti2"]
-script = ExtResource("2_qmica")
+[sub_resource type="Resource" id="Resource_oc4e2"]
+script = ExtResource("2_b35fe")
 max_speed = 50
-acc = 3
+acc = 2
 k = 5
-acceleration = SubResource("Curve_tnchi")
-friction = SubResource("Curve_yjvwc")
+acceleration = SubResource("Curve_tmd02")
+friction = SubResource("Curve_t0ufk")
 
-[sub_resource type="Resource" id="Resource_j5g6p"]
-resource_local_to_scene = true
-script = ExtResource("3_33i21")
+[sub_resource type="Resource" id="Resource_4i18l"]
+script = ExtResource("3_c330g")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfymp"]
 radius = 8.0
@@ -576,7 +586,7 @@ states/Walk/position = Vector2(641, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ts87b"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_mqhhb"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_m7gjx"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_k44ap"), "Hit", "Die", SubResource("AnimationNodeStateMachineTransition_sg0um"), "Die", "End", SubResource("AnimationNodeStateMachineTransition_n2cpk"), "Die", "Idle", SubResource("AnimationNodeStateMachineTransition_vqmjo"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_8a5ct"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_wfni8")]
 graph_offset = Vector2(-11, -78)
 
-[node name="Hostile" type="CharacterBody2D" groups=["hostiles"]]
+[node name="Hostile" type="CharacterBody2D"]
 y_sort_enabled = true
 position = Vector2(186, 33)
 collision_layer = 2
@@ -584,9 +594,8 @@ collision_mask = 2
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_kfo85")
-movement = SubResource("Resource_hcti2")
-stats = SubResource("Resource_j5g6p")
-chasing = true
+movement = SubResource("Resource_oc4e2")
+stats = SubResource("Resource_4i18l")
 metadata/_edit_group_ = true
 
 [node name="Sprite2DShadow" type="Sprite2D" parent="."]
@@ -610,10 +619,6 @@ shape = SubResource("CircleShape2D_l87qk")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
-autostart = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "RESET"
 libraries = {
@@ -630,5 +635,33 @@ parameters/Hit/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0.0425354, -0.633188)
 
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard")]
+script = ExtResource("4_1g4he")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../Blackboard")
+
+[node name="Root" type="Node" parent="BeehaveTree"]
+script = ExtResource("5_uxxe7")
+
+[node name="IsDead" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("8_ldr6f")
+
+[node name="IsHit" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("9_ahfqt")
+
+[node name="Engage" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("6_k0ayi")
+
+[node name="IsPlayerClose" type="Node" parent="BeehaveTree/Root/Engage"]
+script = ExtResource("8_ij5sk")
+
+[node name="ReachPlayer" type="Node" parent="BeehaveTree/Root/Engage"]
+script = ExtResource("10_1v4tm")
+
+[node name="DoNothing" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("9_y040g")
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("7_8y5nr")
+
 [connection signal="body_entered" from="HurtBox" to="." method="_on_hurtbox_entered"]
-[connection signal="timeout" from="Timer" to="." method="update_nav"]
