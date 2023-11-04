@@ -41,11 +41,13 @@ func hit(projectile :Projectile):
 	if stats.health <= 0:
 		died.emit()
 		$CollisionShape2D.set_deferred("disabled", true)
+		$HurtBox.set_deferred("monitoring", false)
 		
 		await get_tree().create_timer(3.0).timeout
 		
 		stats.health = stats.MAX_HEALTH
 		$CollisionShape2D.disabled = false
+		$HurtBox.set_deferred("monitoring", true)
 
 
 func _physics_process(delta):

@@ -1,4 +1,6 @@
-class_name Map extends TileMap
+@tool
+class_name Map extends WFCTileMap
+#class_name Map extends TileMap
 
 
 signal been_hit(projectile :Projectile)

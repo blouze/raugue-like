@@ -55,7 +55,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cy1x1"]
 shader = SubResource("Shader_82407")
 shader_parameter/dither = 0.5
-shader_parameter/bits = 4.0
+shader_parameter/bits = 6.0
 shader_parameter/limit_palette = false
 shader_parameter/tilt = 0.0
 shader_parameter/cam_offset = Vector2(0, 0)
@@ -164,5 +164,5 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="Menu/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "PAUSED"
+text = "PAUSE"
 horizontal_alignment = 1

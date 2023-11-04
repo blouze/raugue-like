@@ -22,7 +22,7 @@ func _physics_process(delta):
 	
 	cam_pos.x = max(cam_pos.x, start.x + Globals.SIZE.x * 0.5)
 	cam_pos.x = min(cam_pos.x, end.x - Globals.SIZE.x * 0.5)
-	
+
 	cam_pos.y = max(cam_pos.y, start.y + Globals.SIZE.y * 0.5)
 	cam_pos.y = min(cam_pos.y, end.y - Globals.SIZE.y * 0.5)
 	

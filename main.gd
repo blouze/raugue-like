@@ -6,6 +6,16 @@ class_name Game extends Node2D
 @export_range(0.0, 0.5) var hurt_stress = 0.35
 @export_range(0.0, 0.2) var freeze_frame = 0.02
 
+@export var peaceful := false :
+	set(value):
+		peaceful = value
+		
+		if not is_inside_tree():
+			await ready
+		
+		for hostile in get_tree().get_nodes_in_group("hostiles"):
+			(hostile as Hostile).chasing = not peaceful
+
 @export var sound_on := true :
 	set(value):
 		sound_on = value
@@ -54,7 +64,7 @@ func _ready():
 	var cells = tile_map.get_used_cells_by_id(0, 0, Vector2i(11, 9))
 	cells.shuffle()
 	
-	for i in range(10):
+	for i in range(5):
 		var pos = tile_map.map_to_local(cells[i])
 		tile_map.add_child(Hostile.create(self, pos))
 

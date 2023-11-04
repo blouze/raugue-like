@@ -576,7 +576,7 @@ states/Walk/position = Vector2(641, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ts87b"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_mqhhb"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_m7gjx"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_k44ap"), "Hit", "Die", SubResource("AnimationNodeStateMachineTransition_sg0um"), "Die", "End", SubResource("AnimationNodeStateMachineTransition_n2cpk"), "Die", "Idle", SubResource("AnimationNodeStateMachineTransition_vqmjo"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_8a5ct"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_wfni8")]
 graph_offset = Vector2(-11, -78)
 
-[node name="Hostile" type="CharacterBody2D"]
+[node name="Hostile" type="CharacterBody2D" groups=["hostiles"]]
 y_sort_enabled = true
 position = Vector2(186, 33)
 collision_layer = 2
