@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://lxrr2f3ekbsk"]
+
+[ext_resource type="PackedScene" uid="uid://bh78bp4rynku3" path="res://src/hostiles/Hostile.tscn" id="1_3vnya"]
+[ext_resource type="Texture2D" uid="uid://cwa7qv1uknrmv" path="res://assets/textures/characters/hostiles/hostiles.png" id="2_vum8d"]
+
+[node name="Demon" instance=ExtResource("1_3vnya")]
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_vum8d")
+hframes = 8
+vframes = 16
+
+[node name="AnimationTree" parent="." index="6"]
+active = false

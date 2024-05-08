@@ -1,8 +1,8 @@
 class_name Movement extends Resource
 
-@export_range(10, 200) var max_speed = 50
-@export_range(1, 10) var acc = 2
-@export_range(1, 10) var k = 5
+@export_range(100, 500) var max_speed = 150
+@export_range(10, 50) var acc = 20
+@export_range(10, 50) var k = 10
 @export var acceleration :Curve = Curve.new()
 @export var friction :Curve = Curve.new()
 

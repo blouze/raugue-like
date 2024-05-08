@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://pv22nvpitdjd"]
 
-[ext_resource type="FontFile" uid="uid://be15i0d36dcgp" path="res://assets/fonts/VCRFont.ttf" id="1_vuqk5"]
+[ext_resource type="FontFile" uid="uid://bnrjsje0ri381" path="res://assets/fonts/Habbo.ttf" id="1_1l0cm"]
 
 [resource]
-default_font = ExtResource("1_vuqk5")
+default_font = ExtResource("1_1l0cm")

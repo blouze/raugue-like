@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Movement" load_steps=4 format=3 uid="uid://dm3heatsxrm5j"]
+
+[ext_resource type="Script" path="res://src/movement/Movement.gd" id="1_d6puk"]
+
+[sub_resource type="Curve" id="Curve_2vhk2"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_e3814"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[resource]
+script = ExtResource("1_d6puk")
+max_speed = 135
+acc = 10
+k = 15
+acceleration = SubResource("Curve_2vhk2")
+friction = SubResource("Curve_e3814")

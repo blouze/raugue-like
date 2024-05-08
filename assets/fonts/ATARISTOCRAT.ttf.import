@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://be15i0d36dcgp"
-path="res://.godot/imported/VCRFont.ttf-aba9cea792f1febe3866b7b8691469b5.fontdata"
+uid="uid://bfw0efgmy5vml"
+path="res://.godot/imported/ATARISTOCRAT.ttf-6a2005ad321eb1217c925e497401bff2.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/VCRFont.ttf"
-dest_files=["res://.godot/imported/VCRFont.ttf-aba9cea792f1febe3866b7b8691469b5.fontdata"]
+source_file="res://assets/fonts/ATARISTOCRAT.ttf"
+dest_files=["res://.godot/imported/ATARISTOCRAT.ttf-6a2005ad321eb1217c925e497401bff2.fontdata"]
 
 [params]
 
@@ -18,9 +18,9 @@ generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
-allow_system_fallback=false
+allow_system_fallback=true
 force_autohinter=false
-hinting=1
+hinting=0
 subpixel_positioning=0
 oversampling=0.0
 Fallbacks=null

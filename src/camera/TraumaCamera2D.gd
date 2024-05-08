@@ -26,7 +26,7 @@ func _physics_process(delta):
 	offset.y = cam_offset * noise.get_noise_1d(0.1 * Time.get_ticks_msec() + 500)
 	
 	trauma = max(0.0, trauma * (1 - cooldown * 0.05))
-	blur.material.set_shader_parameter("size", 1.5 * offset * pow(trauma, 3.0))
+	blur.material.set_shader_parameter("size", offset * pow(trauma, 3.0))
 
 
 func _input(event):

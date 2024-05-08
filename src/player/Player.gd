@@ -24,6 +24,7 @@ var hurt_timer := 0.0
 signal shoot(projectile :Projectile)
 signal been_hurt(hostile :Hostile)
 
+var actionable :Actionable
 
 var blend_pos := Vector2.ZERO :
 	set(value):
@@ -89,3 +90,9 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	speed_bar.value = velocity.length() / movement.max_speed
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("activate"):
+		if actionable and actionable.is_actionable:
+			actionable.execute()

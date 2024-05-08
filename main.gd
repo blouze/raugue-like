@@ -22,14 +22,15 @@ class_name Game extends Node2D
 		SoundManager.disabled = not sound_on
 
 @onready var player = $%Player as Player
-#@onready var hostile = $%Hostile as Hostile
-@onready var tile_map = $%TileMap as TileMap
+@onready var hostile = $%Hostile as Hostile
+@onready var tile_map = $%TileMap as Map
 
 
 func _on_player_shoot(projectile :Projectile):
 	SoundManager.play("res://assets/snd/click.wav")
 	camera.stress(shoot_stress)
 	
+	projectile.body_entered.connect(_on_projectile_hit.bind(projectile))
 	add_child(projectile)
 
 
@@ -44,9 +45,6 @@ func _on_hostile_been_hit(projectile :Projectile, hostile :Hostile):
 	SoundManager.play("res://assets/snd/hitHurt.wav")
 	camera.stress(hit_stress)
 	
-	var pos = lerp(projectile.position, hostile.position, 0.5)
-	add_child(Impact.create(pos))
-	
 	freeze()
 
 
@@ -54,19 +52,30 @@ func _on_hostile_died(hostile :Hostile):
 	pass # Replace with function body.
 
 
-func _on_wall_been_hit(projectile :Projectile):
-	SoundManager.play("res://assets/snd/hitHurt.wav")
-	
+func _on_projectile_hit(body :Node, projectile :Projectile):
 	add_child(Impact.create(projectile.position))
 
 
 func _ready():
+	DialogueManager.get_current_scene = func():
+		return self
+	
 	var cells = tile_map.get_used_cells_by_id(0, 0, Vector2i(11, 9))
 	cells.shuffle()
 	
 	for i in range(0):
 		var pos = tile_map.map_to_local(cells[i])
 		tile_map.add_child(Hostile.create(self, pos))
+	
+	var hostile = $%Hostile as Hostile
+	var actionable = hostile.get_node("Actionable") as Actionable
+	
+	actionable.changed.connect(func():
+		if actionable.is_actionable:
+			player.actionable = actionable
+		else:
+			player.actionable = null
+	)
 
 
 func freeze():

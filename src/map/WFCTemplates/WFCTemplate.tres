@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="WFCBaseTemplate" load_steps=3 format=3 uid="uid://dfgrxnqgyogpo"]
-
-[ext_resource type="Script" path="res://src/map/WFCTemplates/WFCBaseTemplate.gd" id="1_o5kry"]
-[ext_resource type="TileSet" uid="uid://dorxf77wsysvg" path="res://src/map/tile_set.tres" id="2_tbbki"]
-
-[resource]
-script = ExtResource("1_o5kry")
-tile_set = ExtResource("2_tbbki")
