@@ -7,6 +7,7 @@
 vertices = PackedVector2Array(-4, -8, 8, -8, 8, 4, -4, 4)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -8, 8, -8, 8, 4, -4, 4)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ha6ib"]
 polygon = PackedVector2Array(-8, -8, -2.66667, -8, -2.66667, 2.66667, 8, 2.66667, 8, 8, -8, 8)
@@ -15,6 +16,7 @@ polygon = PackedVector2Array(-8, -8, -2.66667, -8, -2.66667, 2.66667, 8, 2.66667
 vertices = PackedVector2Array(-4, -4, 8, -4, 8, 8, -4, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -4, 8, -4, 8, 8, -4, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ygiii"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, -2.66667, -2.66667, -2.66667, -2.66667, 8, -8, 8)
@@ -23,6 +25,7 @@ polygon = PackedVector2Array(-8, -8, 8, -8, 8, -2.66667, -2.66667, -2.66667, -2.
 vertices = PackedVector2Array(-4, -8, 8, -8, 8, 8, -4, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -8, 8, -8, 8, 8, -4, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_hylni"]
 polygon = PackedVector2Array(-8, -8, -2.66667, -8, -2.66667, 8, -8, 8)
@@ -31,6 +34,7 @@ polygon = PackedVector2Array(-8, -8, -2.66667, -8, -2.66667, 8, -8, 8)
 vertices = PackedVector2Array(-8, -8, 8, -8, 8, 4, -8, 4)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 4, -8, 4)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1mk28"]
 polygon = PackedVector2Array(-8, 2.66667, 8, 2.66667, 8, 8, -8, 8)
@@ -39,6 +43,7 @@ polygon = PackedVector2Array(-8, 2.66667, 8, 2.66667, 8, 8, -8, 8)
 vertices = PackedVector2Array(-8, -4, 8, -4, 8, 8, -8, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -4, 8, -4, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lm8a6"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, -2.66667, -8, -2.66667)
@@ -47,6 +52,7 @@ polygon = PackedVector2Array(-8, -8, 8, -8, 8, -2.66667, -8, -2.66667)
 vertices = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sl6hp"]
 
@@ -54,6 +60,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8
 vertices = PackedVector2Array(-8, -8, 4, -8, 4, 4, -8, 4)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 4, -8, 4, 4, -8, 4)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_84j0u"]
 polygon = PackedVector2Array(-8, 2.66667, 2.66667, 2.66667, 2.66667, -8, 8, -8, 8, 8, -8, 8)
@@ -62,6 +69,7 @@ polygon = PackedVector2Array(-8, 2.66667, 2.66667, 2.66667, 2.66667, -8, 8, -8, 
 vertices = PackedVector2Array(-8, -4, 4, -4, 4, 8, -8, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -4, 4, -4, 4, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7780d"]
 polygon = PackedVector2Array(-8, -2.66667, -8, -8, 8, -8, 8, 8, 2.66667, 8, 2.66667, -2.625)
@@ -70,6 +78,7 @@ polygon = PackedVector2Array(-8, -2.66667, -8, -8, 8, -8, 8, 8, 2.66667, 8, 2.66
 vertices = PackedVector2Array(-8, -8, 4, -8, 4, 8, -8, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 4, -8, 4, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8vrph"]
 polygon = PackedVector2Array(2.66667, -8, 8, -8, 8, 8, 2.66667, 8)
@@ -78,6 +87,7 @@ polygon = PackedVector2Array(2.66667, -8, 8, -8, 8, 8, 2.66667, 8)
 vertices = PackedVector2Array(-8, 2.66667, -8, -8, 2.66667, -8, 2.66667, -2.66667, -2.66667, 2.66667, 8, -2.66667, 8, 8, -2.66667, 8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 5, 6, 7, 4)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 2.66667, -8, 2.66667, -2.66667, 8, -2.66667, 8, 8, -2.66667, 8, -2.66667, 2.66667, -8, 2.66667)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3kxkm"]
 
@@ -85,6 +95,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 2.66667, -8, 2.
 vertices = PackedVector2Array(2.66667, 2.66667, 2.8125, 8, -8, 8, -8, -8, 8, -8, 8, 2.66667)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 2.66667, 2.66667, 2.66667, 2.8125, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dg4uo"]
 
@@ -92,6 +103,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 2.666
 vertices = PackedVector2Array(-8, 8, -8, -8, 2.66667, -8, 2.66667, -2.66667, 8, 8, 8, -2.66667)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 2.66667, -8, 2.66667, -2.66667, 8, -2.66667, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2xoqd"]
 
@@ -99,6 +111,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 2.66667, -8, 2.
 vertices = PackedVector2Array(-2.66667, -8, 8, -8, 8, 3.375, 2.66667, 2.66667, -2.66667, -2.66667, 2.4375, 8, -8, 8, -8, -2.66667)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 4, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -2.66667, -2.66667, -2.66667, -2.66667, -8, 8, -8, 8, 3.375, 2.66667, 2.66667, 2.4375, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_tqjfo"]
 
@@ -106,6 +119,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -2.66667, -2.66667,
 vertices = PackedVector2Array(8, 8, -2.8125, 8, -2.66667, 2.66667, 8, -8, -8, -8, -8, 2.625)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -2.8125, 8, -2.66667, 2.66667, -8, 2.625)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4f8dw"]
 
@@ -113,6 +127,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -2
 vertices = PackedVector2Array(-8, 8, -8, -2.66667, -2.66667, -2.66667, 8, 8, 8, -8, -2.66667, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -2.66667, -2.66667, -2.66667, -2.66667, -8, 8, -8, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lc50d"]
 
@@ -132,6 +147,7 @@ polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_tm0b6"]
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dageq"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)

@@ -67,15 +67,15 @@ func _ready():
 		var pos = tile_map.map_to_local(cells[i])
 		tile_map.add_child(Hostile.create(self, pos))
 	
-	var hostile = $%Hostile as Hostile
-	var actionable = hostile.get_node("Actionable") as Actionable
-	
-	actionable.changed.connect(func():
-		if actionable.is_actionable:
-			player.actionable = actionable
-		else:
-			player.actionable = null
-	)
+	#var hostile = $%Hostile as Hostile
+	#var actionable = hostile.get_node("Actionable") as Actionable
+	#
+	#actionable.changed.connect(func():
+		#if actionable.is_actionable:
+			#player.actionable = actionable
+		#else:
+			#player.actionable = null
+	#)
 
 
 func freeze():
