@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://dbcrt8iur1ae4"]
+[gd_scene load_steps=71 format=3 uid="uid://dbcrt8iur1ae4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gsm44"]
 [ext_resource type="Script" path="res://src/map/WFCTemplates/WFCBaseTemplate.gd" id="3_0ngg6"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" path="res://src/player/Player.gd" id="6_vyb1s"]
 [ext_resource type="Texture2D" uid="uid://wpau8pncduyq" path="res://assets/light.png" id="7_m4k15"]
 [ext_resource type="Texture2D" uid="uid://pw1l7xwo8g1h" path="res://assets/Shadow.png" id="9_a46j0"]
+[ext_resource type="Script" path="res://src/hostiles/Actionable.gd" id="10_l3v7m"]
+[ext_resource type="PackedScene" uid="uid://bh78bp4rynku3" path="res://src/hostiles/Hostile.tscn" id="10_rqtbo"]
+[ext_resource type="Resource" uid="uid://bu3x84akq5d7j" path="res://src/dialogues/main.dialogue" id="11_8uspb"]
+[ext_resource type="Texture2D" uid="uid://dur617ja4fqr8" path="res://assets/textures/inputs/gdb-xbox-2.png" id="11_jc47q"]
 
 [sub_resource type="Environment" id="Environment_un2lo"]
 background_mode = 3
@@ -589,6 +593,9 @@ states/Walk/position = Vector2(641, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ts87b"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_mqhhb"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_m7gjx"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_k44ap"), "Hit", "Die", SubResource("AnimationNodeStateMachineTransition_sg0um"), "Die", "End", SubResource("AnimationNodeStateMachineTransition_n2cpk"), "Die", "Idle", SubResource("AnimationNodeStateMachineTransition_vqmjo"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_8a5ct"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_wfni8")]
 graph_offset = Vector2(-11, -78)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ttf1"]
+radius = 32.0
+
 [node name="Main" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_gsm44")
@@ -673,6 +680,26 @@ parameters/Hit/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0.0425354, -0.633188)
 
+[node name="Hostile" parent="TileMap" node_paths=PackedStringArray("player") instance=ExtResource("10_rqtbo")]
+unique_name_in_owner = true
+position = Vector2(487, 275)
+player = NodePath("../Player")
+
+[node name="Actionable" type="Area2D" parent="TileMap/Hostile"]
+process_mode = 3
+script = ExtResource("10_l3v7m")
+dialogue_res = ExtResource("11_8uspb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Hostile/Actionable"]
+shape = SubResource("CircleShape2D_8ttf1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/Hostile/Actionable"]
+unique_name_in_owner = true
+position = Vector2(0, -20)
+texture = ExtResource("11_jc47q")
+region_enabled = true
+region_rect = Rect2(80, 192, 16, 16)
+
 [node name="WFCTemplate" type="TileMap" parent="."]
 visible = false
 tile_set = ExtResource("5_e0mhu")
@@ -682,3 +709,5 @@ script = ExtResource("3_0ngg6")
 
 [connection signal="been_hurt" from="TileMap/Player" to="." method="_on_player_been_hurt"]
 [connection signal="shoot" from="TileMap/Player" to="." method="_on_player_shoot"]
+[connection signal="body_entered" from="TileMap/Hostile/Actionable" to="TileMap/Hostile/Actionable" method="_on_body_entered"]
+[connection signal="body_exited" from="TileMap/Hostile/Actionable" to="TileMap/Hostile/Actionable" method="_on_body_exited"]
